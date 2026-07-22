@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+
+.vscode/
+
+database.db
+
+dataset/*.csv
+dataset/*.parquet
+
+*.log
