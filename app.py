@@ -3,31 +3,17 @@ from flask_cors import CORS
 
 from database import Session, AttackLog
 
-
 app = Flask(__name__)
 
 CORS(app)
 
 
-
 @app.route("/")
 def home():
-
     return """
     <h1>AI ML Real-Time NIDS</h1>
-
     <h2>System Status: 🟢 ONLINE</h2>
-
-    <p>
-    Your AI-based Intrusion Detection System
-    is running successfully.
-    </p>
-
-    <p>
-    <a href="/api/attacks">
-    View Attack Logs
-    </a>
-    </p>
+    <p>Your AI-based Intrusion Detection System is running successfully.</p>
     """
 
 
