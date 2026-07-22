@@ -1,0 +1,9 @@
+Flask
+gunicorn
+SQLAlchemy
+scapy
+numpy
+pandas
+joblib
+scikit-learn
+xgboost
