@@ -3,43 +3,84 @@ from flask_cors import CORS
 
 from database import Session, AttackLog
 
+
 app = Flask(__name__)
 
 CORS(app)
+
+
+
+@app.route("/")
+def home():
+
+    return """
+    <h1>AI ML Real-Time NIDS</h1>
+
+    <h2>System Status: 🟢 ONLINE</h2>
+
+    <p>
+    Your AI-based Intrusion Detection System
+    is running successfully.
+    </p>
+
+    <p>
+    <a href="/api/attacks">
+    View Attack Logs
+    </a>
+    </p>
+    """
+
+
 
 @app.route("/api/attacks")
 def attacks():
 
     session = Session()
 
-    rows = session.query(AttackLog).order_by(AttackLog.id.desc()).limit(50)
+    try:
 
-    data = []
+        rows = session.query(AttackLog).order_by(
+            AttackLog.id.desc()
+        ).limit(50).all()
 
-    for r in rows:
 
-        data.append({
+        data = []
 
-            "time": r.time,
 
-            "src_ip": r.src_ip,
+        for r in rows:
 
-            "dst_ip": r.dst_ip,
+            data.append({
 
-            "protocol": r.protocol,
+                "time": str(r.time),
 
-            "attack": r.attack,
+                "src_ip": r.src_ip,
 
-            "confidence": r.confidence,
+                "dst_ip": r.dst_ip,
 
-            "risk": r.risk
+                "protocol": r.protocol,
 
-        })
+                "attack": r.attack,
 
-    session.close()
+                "confidence": r.confidence,
 
-    return jsonify(data)
+                "risk": r.risk
+
+            })
+
+
+        return jsonify(data)
+
+
+    finally:
+
+        session.close()
+
+
 
 if __name__ == "__main__":
 
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=5000,
+        debug=True
+    )
